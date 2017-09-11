@@ -29,6 +29,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-webserver": "^0.9.1",
     "mapbox-gl": "^0.39.1",
+    "mapbox-gl-geocoder": "^2.0.1",
     "run-sequence": "^2.1.0",
     "vinyl-source-stream": "^1.1.0"
   },

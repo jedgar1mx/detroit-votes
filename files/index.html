@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Detroit Votes Test</title>
+  <meta name="description" content="Detroit Votes Test">
+  <meta name="author" content="Edgar Montes">
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.0.1/mapbox-gl-geocoder.css" type="text/css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Didact+Gothic|PT+Sans:700');
+    body { margin:0; padding:0; font-family: 'Didact Gothic', sans-serif;}
+    h1,h2,h3,h4,h5{font-family: 'PT Sans', sans-serif;}
+    main{max-width: 800px; margin: auto;}
+    main h1{text-align: center;}
+    .map { display: none;}
+    .geocoder-row{display: flex;}
+    .geocoder {margin: auto; width: 20em;}
+    .mapboxgl-ctrl-geocoder { min-width:100%; }
+    .data-card{
+      -webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+      -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+      box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+      padding: 1em;
+      margin-top: 2em;
+    }
+  </style>
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <main>
+    <h1>DETROIT VOTER</h1>
+    <div id="map" class="map"></div>
+    <article class="geocoder-row">
+      <div id="geocoder" class="geocoder"></div>
+    </article>
+    <article id="geocoder-poll">
+    </article>
+    <article id="geocoder-council">
+    </article>
+  </main>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.0.1/mapbox-gl-geocoder.js"></script>
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js"></script>
+  <script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidHJpc3RlbiIsImEiOiJiUzBYOEJzIn0.VyXs9qNWgTfABLzSI3YcrQ';
+var bounds = [
+    [		-83.3437, 	42.2102], // Southwest coordinates
+    [		-82.8754, 	42.5197]  // Northeast coordinates
+];
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v9',
+  center: [-79.4512, 43.6568],
+  zoom: 13,
+  maxBounds: bounds
+});
+
+var geocoder = new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken
+});
+window.onload = function(e){
+  document.querySelector('#geocoder input').placeholder = "Type your address. Ex 1223 Michinga Ave.";
+}
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+map.on('load', function() {
+  geocoder.on('result', function(ev) {
+    console.log(ev);
+    $.getJSON('http://gis.detroitmi.gov/arcgis/rest/services/DoIT/2016_Voting_Precincts/MapServer/0/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=json' , function( pollPlace ) {
+      console.log(pollPlace);
+      console.log(document.querySelector('#geocoder-poll'));
+      document.querySelector('#geocoder-poll').innerHTML = "<article class='data-card'><p><strong>Polling Name:</strong> " + pollPlace.features[0].attributes.polling_lo + "</p><p><strong>Address:</strong> " + pollPlace.features[0].attributes.polling_ad + "</p></article>";
+    });
+     $.getJSON('http://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C+'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson' , function( district ) {
+       console.log(district);
+       document.querySelector('#geocoder-council').innerHTML = "<article class='data-card'><h4>City Coucil District " + district.features[0].attributes.districts + " Candidates</h4><p><strong>Candidate:</strong> Candidate 1</p><p><strong>Candidate:</strong> Candidate 2</p><p><strong>Candidate:</strong> Candidate 3</p></article>";
+    });
+  });
+});
+
+</script>
+</body>
+</html>

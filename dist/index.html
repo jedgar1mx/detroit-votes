@@ -2,106 +2,82 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>El Rey View</title>
-  <meta name="description" content="Experimenta view with all the public data for the City of Detroit.">
-  <meta name="author" content="Edgar Montes, Dexter Slursarski & Karl Kaebnick">
+  <title>DETROIT VOTES</title>
+  <meta name="description" content="Project to help detroiters get informed about local elections.">
+  <meta name="author" content="Edgar Montes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <!--build:css css/styles.min.css-->
   <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
-  <link href="https://unpkg.com/mapillary-js@2.5.2/dist/mapillary.min.css" rel="stylesheet" />
-  <link href='https://api.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css' rel='stylesheet' />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.0.1/mapbox-gl-geocoder.css" type="text/css" />
   <link href="css/styles.css" rel="stylesheet" />
   <!--endbuild-->
 </head>
 <body>
+  <div id="map"></div>
+  <input type="checkbox" id="menu" />
+  <label for="menu" class="menu">
+    <span></span>
+    <span></span>
+    <span></span>
+    MENU
+  </label>
+  <nav class="nav">
+  	<ul>
+  		<li><a href="#">Home</a></li>
+  		<li><a href="#">About</a></li>
+  		<li><a href="#">Contact</a></li>
+  	</ul>
+  </nav>
+  <header>
+    <h1>DETROIT VOTES</h1>
+  </header>
   <main>
-    <section id="end-survey-popup">
-      <article class="end-survey-content">
-        <h4>Are you sure you want to exit this survey?</h4>
-        <article class="end-survey-buttons">
-          <span id="end-survey-btn">
-            YES
-          </span>
-          <span id="stay-survey-btn">
-            NO
-          </span>
+    <!-- <section class="top-hero-container">
+      <article class="top-hero">
+        <h1><span>Welcome to</span><br>DETROIT.GOV</h1>
+      </article>
+    </section> -->
+    <section class="intro">
+      <h2>Voting Rights are under attack.</h2>
+      <p>The right to vote is the foundation of our democracy. If we lose our voice at the ballot box and marginalize a new generation of voters, we lose our chance at building the future we want. We can’t back down now. Get informed.</p>
+    </section>
+    <!-- <section class="government-status">
+      <h2>FRIDAY, SEPTEMBER 8</h2>
+      <article class="service">
+        <article class="icon">
+          <img src="img/building.png" alt="Building Hours">
+        </article>
+        <article class="description">
+          <p>CITY BUILDINGS</p>
+          <p>All city buildings are operating at normal hours.</p>
         </article>
       </article>
-    </section>
-    <section id="info" class="active">
-      <section class="info-container">
-        <section id="panel-nav">
-          <!-- <article class="top-nav-item">
-            <div id="filter-view-btn">
-              <img src="img/filter.png" alt="filters">
-            </div>
-          </article> -->
-          <article class="top-nav-item">
-            <div id="data-sets-view-btn" onclick="mapPanel.changeViews(this)">
-              <img src="img/route.png" alt="boundaries">
-            </div>
-          </article>
-          <article class="top-nav-item">
-            <div id="data-results-view-btn" class="active" onclick="mapPanel.changeViews(this)">
-              <img src="img/bars.png" alt="data results">
-            </div>
-          </article>
-          <article class="top-nav-item">
-            <div id="information-view-btn" onclick="mapPanel.changeViews(this)">
-              <img src="img/question.png" alt="information">
-            </div>
-          </article>
-          <article class="top-nav-item close-open-btn">
-            <div id="close-emergency-modal-btn">
-              <img src="img/left-arrow.png" alt="btn">
-            </div>
-          </article>
-        </section>
-        <article id="panel-content"></article>
-        <article class="layer-controllers">
+      <article class="service">
+        <article class="icon">
+          <img src="img/parking-meter.png" alt="Parking meter">
         </article>
-      </section>
-    </section>
-    <section id="survey" class="">
-    </section>
-    <article id="map"></article>
-    <article id="survey-note-card">
-      <article id="close-survey-btn">
-        <img src="img/error.png" alt="close"/>
+        <article class="description">
+          <p>PARKING METER</p>
+          <p>All city parking meters are currently working.</p>
+        </article>
       </article>
-      <article class="street-name"><h1></h1></article>
-      <article class="question-container"></article>
-      <article class="survey-buttons"></article>
-    </article>
-    <section id="mobile-geocoder"></section>
-    <section id="basemap-toggle">
-      <article class="map-view" title="Map view">
-        <img src="img/map.png" alt="map view">
+      <article class="service">
+        <article class="icon">
+          <img src="img/rubbish-bin.png" alt="Waste pick up">
+        </article>
+        <article class="description">
+          <p>TRASH & RECYCLING</p>
+          <p>All city waste pick up services are behind due to holidays.</p>
+        </article>
       </article>
-      <article class="satellite-view" title="Satellite view">
-        <img src="img/satellites.png" alt="satellite view">
-      </article>
+    </section> -->
+    <section class="voting-info">
+      <h3>Find your voting information.</h3>
+      <article id="geocoder"></article>
     </section>
   </main>
-  <script src='https://api.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.js'></script>
   <script src="js/app.main.js"></script>
-  <!--build:js js/main.min.js -->
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.0.1/mapbox-gl-geocoder.js"></script>
-  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js"></script>
-  <script src="https://unpkg.com/mapillary-js@2.5.2/dist/mapillary.min.js"></script>
-  <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
-  <script src="https://unpkg.com/terraformer@1.0.7"></script>
-  <script src="https://unpkg.com/terraformer-arcgis-parser@1.0.5"></script>
-  <script src="js/router.class.js"></script>
-  <script src="js/template.module.js"></script>
-  <script src="js/survey.module.js"></script>
-  <script src="js/panel.module.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/map.js"></script>
-  <script src="js/map_section_click_module.js"></script>
-  <script src="js/moment.min.js"></script> -->
-  <!--endbuild -->
+
 </body>
 </html>

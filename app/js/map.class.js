@@ -1,9 +1,13 @@
 'use strict';
 import mapboxgl from 'mapbox-gl';
-
-mapboxgl.accessToken = 'pk.eyJ1Ijoic2x1c2Fyc2tpZGRldHJvaXRtaSIsImEiOiJjaXZsNXlwcXQwYnY5MnlsYml4NTJ2Mno4In0.8wKUnlMPIlxq-eWH0d10-Q';
+import Connector from './connector.class.js';
+var MapboxGeocoder = require('mapbox-gl-geocoder');
+mapboxgl.accessToken = 'pk.eyJ1IjoiamVkZ2FyMW14IiwiYSI6ImNqNzc0cDc0YjF0eTYzM3A4M2JxaHNocnUifQ.vuXBYSPtZuSfnx3xu9xb0Q';
 export default class Map {
   constructor(init) {
+    this.geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken
+    });
     this.prevState = null;
     this.currentState = {
       baseMap: init.baseLayers.street,
@@ -29,6 +33,9 @@ export default class Map {
       southwest: init.boundaries.sw,
       northeast: init.boundaries.ne,
     };
+    this.map.on('load',()=>{
+      document.getElementById('geocoder').appendChild(this.geocoder.onAdd(this.map))
+    });
     this.map.on('style.load',()=>{
       this.loadMap();
     });
@@ -53,6 +60,15 @@ export default class Map {
     });
     this.map.on('click', function (e) {
       console.log(e);
+    });
+    this.geocoder.on('result', function(ev) {
+      console.log(ev);
+      Connector.getData('http://gis.detroitmi.gov/arcgis/rest/services/DoIT/2016_Voting_Precincts/MapServer/0/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=json',function( pollPlace ) {
+        console.log(pollPlace);
+      });
+      Connector.getData('http://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C+'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson' , function( district ) {
+         console.log(district);
+      });
     });
   }
   changeBaseMap(baseMap){

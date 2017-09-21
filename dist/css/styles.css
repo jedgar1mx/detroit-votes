@@ -140,6 +140,7 @@ header {
   height: 5em;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5); }
   header h1 {
+    padding-left: 2em;
     margin: auto;
     text-align: center; }
 
@@ -155,7 +156,7 @@ header {
   margin: 0 auto; }
 
 main {
-  padding-top: 6em;
+  padding-top: 5em;
   position: relative;
   display: block;
   width: 100%;
@@ -164,6 +165,8 @@ main {
   z-index: 0; }
   main .intro {
     padding: 0 1em; }
+    main .intro h2 {
+      text-align: center; }
 
 .top-hero-container {
   background-image: url("../img/western.jpg");
@@ -200,8 +203,6 @@ main {
   .voting-info h3 {
     margin: 0 0 1em 0;
     text-align: center; }
-  .voting-info #geocoder {
-    padding: 0 2em; }
-    .voting-info #geocoder .mapboxgl-ctrl-geocoder {
-      width: 100%;
-      border-radius: 0; }
+  .voting-info #geocoder .mapboxgl-ctrl-geocoder {
+    width: 100%;
+    border-radius: 0; }

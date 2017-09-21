@@ -179,6 +179,7 @@ header{
 	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.5);
 
 	h1{
+		padding-left: 2em;
 		margin: auto;
 		text-align: center;
 	}
@@ -200,7 +201,7 @@ header{
 }
 
 main {
-	padding-top: 6em;
+	padding-top: 5em;
 	position: relative;
 	display: block;
 	width: 100%;
@@ -211,6 +212,10 @@ main {
 
 	.intro{
 		padding: 0 1em;
+
+		h2{
+			text-align: center;
+		}
 	}
 }
 .top-hero-container{
@@ -262,7 +267,6 @@ main {
 		text-align: center;
 	}
 	#geocoder{
-		padding: 0 2em;
 
 		.mapboxgl-ctrl-geocoder{
 			width: 100%;

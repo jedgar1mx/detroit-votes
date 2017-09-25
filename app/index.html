@@ -14,7 +14,6 @@
   <!--endbuild-->
 </head>
 <body>
-  <div id="map"></div>
   <input type="checkbox" id="menu" />
   <label for="menu" class="menu">
     <span></span>
@@ -40,6 +39,30 @@
     <section class="voting-info">
       <h3>Find your voting information.</h3>
       <article id="geocoder"></article>
+    </section>
+    <section class="search-results">
+      <p>Here is the voting information for this address.</p>
+      <section class="flex-grid">
+        <section class="results-grouping">
+          <article class="accordion-btn animated-button victoria-two">voting poll</article>
+          <article class="accordion-content active">
+            <div class="">
+              <p>Name: Western Highschool</p>
+              <p>Address: 1000 scotten</p>
+              <p>Hours: 8am - 8pm</p>
+              <div id="map"></div>
+            </div>
+          </article>
+        </section>
+        <section class="results-grouping">
+          <article class="accordion-btn animated-button victoria-two">Candidates for City Mayor</article>
+          <article class="accordion-content">
+            <div class="">
+              <p>Candidates for City Mayor</p>
+            </div>
+          </article>
+        </section>
+      </section>
     </section>
   </main>
   <script src="js/app.main.js"></script>

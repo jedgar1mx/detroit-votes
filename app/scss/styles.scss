@@ -1,4 +1,5 @@
 @import url('../fonts/BEBAS.ttf');
+@import "buttons";
 $base-duration: 500ms;
 
 // Colors
@@ -21,7 +22,6 @@ header{width: 100%; display: flex;}
 main {position: relative; width: 100%;}
 h1,h2,h3,h4,h5{font-weight: bold}
 img{width: 100%;}
-#map{display: none;}
 // ====================== menu ============================
 .menu {
 	position: fixed;
@@ -272,6 +272,46 @@ main {
 			width: 100%;
 			border-radius: 0;
 		}
+	}
+}
+.search-results{
+	p{
+		padding: 0 1em;
+	}
+}
+.flex-grid{
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+.results-grouping{
+	width: 100%;
+}
+.accordion-btn{
+	width: 100%;
+	cursor: pointer;
+}
+.accordion-content{
+	height: 0;
+	div{
+		display: none;
+	}
+	#map{display: none;}
+}
+.accordion-content.active{
+	background-color: $color-2;
+	color: $color-4;
+	padding: .25em 1em 1em 1em;
+	height: auto;
+
+	div{
+		display: block;
+	}
+	#map{
+		display: block;
+		width: 100%;
+		height: calc(100vw - 2em);
+		border-radius: 50%;
 	}
 }
 // ===================== main end =========================

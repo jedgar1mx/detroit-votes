@@ -1,4 +1,74 @@
 @import url("../fonts/BEBAS.ttf");
+/* Global Button Styles */
+article.animated-button {
+  position: relative;
+  display: block;
+  padding: 14px 15px;
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: .08em;
+  border-radius: 0;
+  text-shadow: 0 0 1px rgba(68, 68, 68, 0.5), 0 1px 0 rgba(68, 68, 68, 0.5);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease; }
+
+article.animated-button:after {
+  content: "";
+  position: absolute;
+  height: 0%;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  z-index: -1;
+  -webkit-transition: all 0.75s ease 0s;
+  -moz-transition: all 0.75s ease 0s;
+  -o-transition: all 0.75s ease 0s;
+  transition: all 0.75s ease 0s; }
+
+article.animated-button:hover {
+  color: #000;
+  text-shadow: none; }
+
+article.animated-button:hover:after {
+  height: 100vw; }
+
+article.animated-button {
+  position: relative;
+  display: block;
+  padding: 14px 15px;
+  color: #000;
+  font-size: 14px;
+  border-radius: 0;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: .08em;
+  text-shadow: 0 0 1px rgba(68, 68, 68, 0.5), 0 1px 0 rgba(68, 68, 68, 0.5);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease; }
+
+article.animated-button.victoria-two {
+  border-top: 2px solid #fec845;
+  border-bottom: 2px solid #fec845; }
+
+article.animated-button.victoria-two:after {
+  background: #fec845;
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  -ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
+  transform: translateX(-50%) translateY(-50%) rotate(25deg); }
+
 *, *:before, *:after {
   box-sizing: border-box;
   outline: none; }
@@ -22,9 +92,6 @@ h1, h2, h3, h4, h5 {
 
 img {
   width: 100%; }
-
-#map {
-  display: none; }
 
 .menu {
   position: fixed;
@@ -206,3 +273,38 @@ main {
   .voting-info #geocoder .mapboxgl-ctrl-geocoder {
     width: 100%;
     border-radius: 0; }
+
+.search-results p {
+  padding: 0 1em; }
+
+.flex-grid {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap; }
+
+.results-grouping {
+  width: 100%; }
+
+.accordion-btn {
+  width: 100%;
+  cursor: pointer; }
+
+.accordion-content {
+  height: 0; }
+  .accordion-content div {
+    display: none; }
+  .accordion-content #map {
+    display: none; }
+
+.accordion-content.active {
+  background-color: #444;
+  color: #fff;
+  padding: .25em 1em 1em 1em;
+  height: auto; }
+  .accordion-content.active div {
+    display: block; }
+  .accordion-content.active #map {
+    display: block;
+    width: 100%;
+    height: calc(100vw - 2em);
+    border-radius: 50%; }

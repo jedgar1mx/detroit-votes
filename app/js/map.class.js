@@ -25,17 +25,19 @@ export default class Map {
       center: init.center,
       zoom: init.zoom,
       layers: init.layers,
-      sources: init.sources
+      sources: init.sources,
+      interactive: init.interactive
     };
     this.mapContainer = init.mapContainer;
-    this.map = new mapboxgl.Map({
+    Map.setMap(new mapboxgl.Map({
       container: init.mapContainer, // container id
       style: `${init.styleURL}/${init.baseLayers.street}`, //stylesheet location
       center: init.center, // starting position
       zoom: init.zoom, // starting zoom
       keyboard: true,
-      maxBounds: this.boundaries
-    });
+      maxBounds: this.boundaries,
+      interactive: init.interactive
+    }));
     this.styleURL = init.styleURL;
     this.baseLayers = {
       street: init.baseLayers.street,
@@ -45,24 +47,24 @@ export default class Map {
       southwest: init.boundaries.sw,
       northeast: init.boundaries.ne,
     };
-    this.map.on('load',()=>{
-      document.getElementById('geocoder').appendChild(this.geocoder.onAdd(this.map))
+    Map.getMap().on('load',()=>{
+      document.getElementById('geocoder').appendChild(this.geocoder.onAdd(Map.getMap()))
     });
-    this.map.on('style.load',()=>{
+    Map.getMap().on('style.load',()=>{
       this.loadMap();
     });
-    this.map.on("mousemove", function(e, parent = this) {
+    Map.getMap().on("mousemove", function(e, parent = this) {
       // var features = parent.queryRenderedFeatures(e.point, {
       //   layers: ["council-fill"]
       // });
       parent.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
     });
-    this.map.on('click', function (e) {
+    Map.getMap().on('click', function (e) {
       console.log(e);
     });
   }
   changeBaseMap(baseMap){
-    this.map.setStyle(`${this.styleURL}/${this.baseLayers[baseMap]}`);
+    Map.getMap().setStyle(`${this.styleURL}/${this.baseLayers[baseMap]}`);
   }
   loadMap() {
     let sourcePromise = new Promise((resolve, reject) => {
@@ -82,7 +84,7 @@ export default class Map {
         };
         (this.currentState.sources[i].data === undefined) ? 0: tempSource.data = this.currentState.sources[i].data;
         (this.currentState.sources[i].url === undefined) ? 0: tempSource.url = this.currentState.sources[i].url;
-        this.map.addSource(this.currentState.sources[i].id, tempSource);
+        Map.getMap().addSource(this.currentState.sources[i].id, tempSource);
       }
       return true;
     } catch (e) {
@@ -105,8 +107,14 @@ export default class Map {
       (val.currentState.layers[i].maxzoom === undefined) ? 0: tempLayer.maxzoom = val.currentState.layers[i].maxzoom;
       (val.currentState.layers[i].metadata === undefined) ? 0: tempLayer.metadata = val.currentState.layers[i].metadata;
       (val.currentState.layers[i].ref === undefined) ? 0: tempLayer.ref = val.currentState.layers[i].ref;
-      val.map.addLayer(tempLayer);
+      Map.getMap().addLayer(tempLayer);
     }
+  }
+  static getMap(){
+    return this.map;
+  }
+  static setMap(map){
+    this.map = map;
   }
   static setGeocoderStatus(s){
     this.geocoderActive = s;
@@ -116,12 +124,19 @@ export default class Map {
   }
   static loadGeocoderResults(ev){
     console.log(ev);
-    this.map.getSource('single-point').setData(ev.result.geometry);
+    Map.getMap().getSource('single-point').setData(ev.result.geometry);
     Connector.getData('http://gis.detroitmi.gov/arcgis/rest/services/DoIT/2016_Voting_Precincts/MapServer/0/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=json',function( pollPlace ) {
       console.log(JSON.parse(pollPlace));
-    });
-    Connector.getData('http://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C+'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson' , function( district ) {
-       console.log(JSON.parse(district));
+      document.getElementById('poll-name').innerHTML = JSON.parse(pollPlace).features[0].attributes.polling_lo;
+      document.getElementById('poll-addr').innerHTML = JSON.parse(pollPlace).features[0].attributes.polling_ad;
+
+      Connector.getData('http://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C+'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson' , function( district ) {
+         console.log(JSON.parse(district));
+         document.querySelectorAll('.district-num').forEach(function(item){
+           item.innerHTML = JSON.parse(district).features[0].attributes.districts;
+         });
+         document.querySelector('.search-results').className = 'search-results active';
+      });
     });
   }
 }

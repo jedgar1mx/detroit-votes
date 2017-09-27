@@ -275,6 +275,10 @@ main {
 	}
 }
 .search-results{
+	display: none;
+}
+.search-results.active{
+	display: block;
 	p{
 		padding: 0 1em;
 	}
@@ -309,9 +313,14 @@ main {
 	}
 	#map{
 		display: block;
-		width: 100%;
-		height: calc(100vw - 2em);
+		width: 80vw;
+		height: calc(80vw);
 		border-radius: 50%;
+		margin: auto;
 	}
 }
 // ===================== main end =========================
+footer{
+	padding: 2em;
+	text-align: center;
+}

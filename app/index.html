@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>DETROIT VOTES</title>
+  <title>INFORM DETROIT</title>
   <meta name="description" content="Project to help detroiters get informed about local elections.">
   <meta name="author" content="Edgar Montes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
@@ -29,7 +29,7 @@
   	</ul>
   </nav>
   <header>
-    <h1>DETROIT VOTES</h1>
+    <h1>INFORM DETROIT</h1>
   </header>
   <main>
     <section class="intro">
@@ -45,10 +45,10 @@
       <section class="flex-grid">
         <section class="results-grouping">
           <article class="accordion-btn animated-button victoria-two">voting poll</article>
-          <article class="accordion-content active">
+          <article class="accordion-content">
             <div class="">
-              <p>Name: Western Highschool</p>
-              <p>Address: 1000 scotten</p>
+              <p>Name: <span id="poll-name"></span></p>
+              <p>Address: <span id="poll-addr"></span></p>
               <p>Hours: 8am - 8pm</p>
               <div id="map"></div>
             </div>
@@ -63,8 +63,43 @@
           </article>
         </section>
       </section>
+      <section class="results-grouping">
+        <article class="accordion-btn animated-button victoria-two">Candidates for City Clerk</article>
+        <article class="accordion-content">
+          <div class="">
+            <p>Candidates for City Clerk</p>
+          </div>
+        </article>
+      </section>
+      <section class="results-grouping">
+        <article class="accordion-btn animated-button victoria-two">Candidates for Council at Large</article>
+        <article class="accordion-content">
+          <div class="">
+            <p>Candidates for Council at Large</p>
+          </div>
+        </article>
+      </section>
+      <section class="results-grouping">
+        <article class="accordion-btn animated-button victoria-two">Candidates for Council District <span class="district-num"></span></article>
+        <article class="accordion-content">
+          <div class="">
+            <p>Candidates for Council District</p>
+          </div>
+        </article>
+      </section>
+      <section class="results-grouping">
+        <article class="accordion-btn animated-button victoria-two">Candidates for Police Commissioner District <span class="district-num"></span></article>
+        <article class="accordion-content">
+          <div class="">
+            <p>Candidates for Police Commissioner District</p>
+          </div>
+        </article>
+      </section>
     </section>
   </main>
+  <footer>
+    Inform Detroit &copy; 2017
+  </footer>
   <script src="js/app.main.js"></script>
 </body>
 </html>

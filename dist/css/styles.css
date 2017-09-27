@@ -274,8 +274,13 @@ main {
     width: 100%;
     border-radius: 0; }
 
-.search-results p {
-  padding: 0 1em; }
+.search-results {
+  display: none; }
+
+.search-results.active {
+  display: block; }
+  .search-results.active p {
+    padding: 0 1em; }
 
 .flex-grid {
   width: 100%;
@@ -305,6 +310,11 @@ main {
     display: block; }
   .accordion-content.active #map {
     display: block;
-    width: 100%;
-    height: calc(100vw - 2em);
-    border-radius: 50%; }
+    width: 80vw;
+    height: calc(80vw);
+    border-radius: 50%;
+    margin: auto; }
+
+footer {
+  padding: 2em;
+  text-align: center; }

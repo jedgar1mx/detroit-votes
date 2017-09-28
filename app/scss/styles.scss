@@ -1,4 +1,5 @@
 @import url('../fonts/BEBAS.ttf');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import "buttons";
 $base-duration: 500ms;
 
@@ -17,13 +18,14 @@ $lg: new-breakpoint(min-width 1024px);
 	box-sizing: border-box;
 	outline: none;
 }
-body { margin:0; padding:0; font-family: 'BEBAS', sans-serif; font-weight: lighter;}
+body { margin:0; padding:0; font-family: 'Montserrat', sans-serif;}
 header{width: 100%; display: flex;}
 main {position: relative; width: 100%;}
-h1,h2,h3,h4,h5{font-weight: bold}
+h1,h2,h3,h4,h5{font-family: 'BEBAS', sans-serif; font-weight: bold}
 img{width: 100%;}
 // ====================== menu ============================
 .menu {
+	font-family: 'BEBAS', sans-serif;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -201,6 +203,7 @@ header{
 }
 
 main {
+	min-height: calc(100vh - 5em);
 	padding-top: 5em;
 	position: relative;
 	display: block;
@@ -293,6 +296,7 @@ main {
 }
 .accordion-btn{
 	width: 100%;
+	font-family: 'BEBAS', sans-serif;
 	cursor: pointer;
 }
 .accordion-content{
@@ -303,6 +307,8 @@ main {
 	#map{display: none;}
 }
 .accordion-content.active{
+	display: flex;
+	flex-wrap: wrap;
 	background-color: $color-2;
 	color: $color-4;
 	padding: .25em 1em 1em 1em;
@@ -310,6 +316,7 @@ main {
 
 	div{
 		display: block;
+		width: 100%;
 	}
 	#map{
 		display: block;
@@ -318,9 +325,19 @@ main {
 		border-radius: 50%;
 		margin: auto;
 	}
+	p{
+		padding: 0;
+	}
 }
 // ===================== main end =========================
 footer{
-	padding: 2em;
+	height: 5em;
+	display: flex;
+	background-color: $color-2;
+	color: $color-4;
 	text-align: center;
+
+	div{
+		margin: auto;
+	}
 }

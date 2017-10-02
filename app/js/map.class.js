@@ -5,20 +5,7 @@ var MapboxGeocoder = require('mapbox-gl-geocoder');
 mapboxgl.accessToken = 'pk.eyJ1IjoiamVkZ2FyMW14IiwiYSI6ImNqNzc0cDc0YjF0eTYzM3A4M2JxaHNocnUifQ.vuXBYSPtZuSfnx3xu9xb0Q';
 export default class Map {
   constructor(init) {
-    if(init.geocoder){
-      this.geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken
-      });
-      this.geocoder.on('result', function(e) {
-        if(Map.getGeocoderStatus()){
-          console.log("Geocoder already searching");
-        }else{
-          Map.setGeocoderStatus(true);
-          Map.loadGeocoderResults(e);
-        }
-      });
-    }
-    this.geocoderActive = false;
+    this.data = null;
     this.prevState = null;
     this.currentState = {
       baseMap: init.baseLayers.street,
@@ -29,23 +16,23 @@ export default class Map {
       interactive: init.interactive
     };
     this.mapContainer = init.mapContainer;
+    this.boundaries = {
+      southwest: init.boundaries.sw,
+      northeast: init.boundaries.ne,
+    };
     Map.setMap(new mapboxgl.Map({
       container: init.mapContainer, // container id
       style: `${init.styleURL}/${init.baseLayers.street}`, //stylesheet location
       center: init.center, // starting position
       zoom: init.zoom, // starting zoom
       keyboard: true,
-      maxBounds: this.boundaries,
+      maxBounds: [this.boundaries.southwest, this.boundaries.northeast],
       interactive: init.interactive
     }));
     this.styleURL = init.styleURL;
     this.baseLayers = {
       street: init.baseLayers.street,
       satellite: init.baseLayers.satellite
-    };
-    this.boundaries = {
-      southwest: init.boundaries.sw,
-      northeast: init.boundaries.ne,
     };
     Map.getMap().on('load',()=>{
       document.getElementById('geocoder').appendChild(this.geocoder.onAdd(Map.getMap()))
@@ -62,6 +49,22 @@ export default class Map {
     Map.getMap().on('click', function (e) {
       console.log(e);
     });
+    this.geocoderActive = false;
+    if(init.geocoder){
+      this.geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        bbox: [-83.3437,42.2102,-82.8754,42.5197],
+        placeholder: "Enter your address."
+      });
+      this.geocoder.on('result', function(e) {
+        if(Map.getGeocoderStatus()){
+          console.log("Geocoder already searching");
+        }else{
+          Map.setGeocoderStatus(true);
+          Map.loadGeocoderResults(e);
+        }
+      });
+    }
   }
   changeBaseMap(baseMap){
     Map.getMap().setStyle(`${this.styleURL}/${this.baseLayers[baseMap]}`);
@@ -110,6 +113,12 @@ export default class Map {
       Map.getMap().addLayer(tempLayer);
     }
   }
+  static setData(data){
+    this.data = data;
+  }
+  static getData(){
+    return this.data;
+  }
   static getMap(){
     return this.map;
   }
@@ -134,6 +143,7 @@ export default class Map {
          console.log(JSON.parse(district));
          document.querySelectorAll('.district-num').forEach(function(item){
            item.innerHTML = JSON.parse(district).features[0].attributes.districts;
+           console.log(Map.getData());
          });
          document.querySelector('.search-results').className = 'search-results active';
       });

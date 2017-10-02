@@ -3,10 +3,7 @@ import Map from './map.class.js';
 // import Candidate from './candidate.class.js';
 import Connector from './connector.class.js'
 (function(){
-  Connector.getData('js/data.json', function(response){
-    console.log(JSON.parse(response));
-  });
-  var map = new Map({
+  let map = new Map({
     styleURL: 'mapbox://styles/jedgar1mx',
     mapContainer: 'map',
     geocoder: true,
@@ -73,13 +70,34 @@ import Connector from './connector.class.js'
       }
     ]
   });
+
+  Connector.getData('js/data.json', function(response){
+    console.log(JSON.parse(response));
+    Map.setData(JSON.parse(response));
+  });
+
   let toggleDisplay = function toggleDisplay(e){
     console.log(e);
+    console.log(e.target.parentElement.childNodes);
     console.log(e.target.parentElement.childNodes[3].className);
-    (e.target.parentElement.childNodes[3].className === 'accordion-content active') ? e.target.parentElement.childNodes[3].className = 'accordion-content' : e.target.parentElement.childNodes[3].className = 'accordion-content active';
+    if(e.target.className === 'accordion-btn animated-button victoria-two'){
+      (e.target.parentElement.childNodes[3].className === 'accordion-content active') ? e.target.parentElement.childNodes[3].className = 'accordion-content' : e.target.parentElement.childNodes[3].className = 'accordion-content active';
+    }else{
+      console.log("topic section");
+      console.log(e.target);
+      let tempContainer = document.querySelector('.topic-accordion[data-id="' + e.target.getAttribute('data-id') + '"]');
+      console.log(tempContainer);
+      (tempContainer.className === 'topic-accordion active') ? tempContainer.className = 'topic-accordion' : tempContainer.className = 'topic-accordion active';
+    }
   };
   let sectionBtns = document.querySelectorAll('.accordion-btn');
   sectionBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e){
+      toggleDisplay(e);
+    });
+  });
+  let topicBtns = document.querySelectorAll('.topic-btn');
+  topicBtns.forEach(function(btn) {
     btn.addEventListener('click', function(e){
       toggleDisplay(e);
     });

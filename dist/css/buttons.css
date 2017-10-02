@@ -1,5 +1,5 @@
 /* Global Button Styles */
-article.animated-button {
+.animated-button {
   position: relative;
   display: block;
   padding: 14px 15px;
@@ -18,7 +18,7 @@ article.animated-button {
   -o-transition: all 1s ease;
   transition: all 1s ease; }
 
-article.animated-button:after {
+.animated-button:after {
   content: "";
   position: absolute;
   height: 0%;
@@ -31,14 +31,14 @@ article.animated-button:after {
   -o-transition: all 0.75s ease 0s;
   transition: all 0.75s ease 0s; }
 
-article.animated-button:hover {
+.animated-button:hover {
   color: #000;
   text-shadow: none; }
 
-article.animated-button:hover:after {
+.animated-button:hover:after {
   height: 100vw; }
 
-article.animated-button {
+.animated-button {
   position: relative;
   display: block;
   padding: 14px 15px;
@@ -57,13 +57,28 @@ article.animated-button {
   -o-transition: all 1s ease;
   transition: all 1s ease; }
 
-article.animated-button.victoria-two {
+.animated-button.victoria-two {
   border-top: 2px solid #fec845;
   border-bottom: 2px solid #fec845; }
 
-article.animated-button.victoria-two:after {
+.animated-button.victoria-two:after {
   background: #fec845;
   -moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   -ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   -webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   transform: translateX(-50%) translateY(-50%) rotate(25deg); }
+
+.animated-button.victoria-four {
+  border: 2px solid #D24D57; }
+
+.animated-button.victoria-four:after {
+  background: #D24D57;
+  opacity: .5;
+  -moz-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  -ms-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  -webkit-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  transform: translateY(-50%) translateX(-50%) rotate(90deg); }
+
+.animated-button.victoria-four:hover:after {
+  opacity: 1;
+  height: 600% !important; }

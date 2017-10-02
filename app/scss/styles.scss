@@ -239,29 +239,6 @@ main {
 		color: $color-4;
 	}
 }
-.government-status{
-	width: 100%;
-	padding: 0 1em;
-
-	h2{
-		text-align: center;
-	}
-
-	.service{
-		display: flex;
-		width: 100%;
-		padding: 0 .5em;
-
-		.icon{
-			width: 6em;
-			padding: 1em;
-		}
-
-		.description{
-			flex: 1;
-		}
-	}
-}
 .voting-info{
 	background-color: $color-1;
 	padding: 1em;
@@ -294,17 +271,43 @@ main {
 .results-grouping{
 	width: 100%;
 }
-.accordion-btn{
+.accordion-btn, .topic-btn{
 	width: 100%;
 	font-family: 'BEBAS', sans-serif;
 	cursor: pointer;
 }
+.topic-btn{
+	color: $color-4;
+}
+.topic-btn:hover{
+	color: $color-4;
+	background-color: $color-1;
+}
 .accordion-content{
 	height: 0;
+	transition: all .2 ease-in-out;
 	div{
 		display: none;
 	}
 	#map{display: none;}
+}
+.topic-accordion{
+	height: 0;
+	transition: all .2 ease-in-out;
+
+	.question{
+		display: none;
+	}
+}
+.topic-accordion.active{
+	display: flex;
+	flex-wrap: wrap;
+	height: auto;
+	transition: all .2 ease-in-out;
+
+	.question{
+		display: block;
+	}
 }
 .accordion-content.active{
 	display: flex;
@@ -313,10 +316,18 @@ main {
 	color: $color-4;
 	padding: .25em 1em 1em 1em;
 	height: auto;
+	transition: all .2 ease-in-out;
+
+	.video-container{
+		margin-bottom: 1em;
+	}
 
 	div{
 		display: block;
 		width: 100%;
+	}
+	div:not(:last-child){
+		border-bottom: 1px solid $color-4;
 	}
 	#map{
 		display: block;

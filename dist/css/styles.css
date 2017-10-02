@@ -1,7 +1,7 @@
 @import url("../fonts/BEBAS.ttf");
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 /* Global Button Styles */
-article.animated-button {
+.animated-button {
   position: relative;
   display: block;
   padding: 14px 15px;
@@ -20,7 +20,7 @@ article.animated-button {
   -o-transition: all 1s ease;
   transition: all 1s ease; }
 
-article.animated-button:after {
+.animated-button:after {
   content: "";
   position: absolute;
   height: 0%;
@@ -33,14 +33,14 @@ article.animated-button:after {
   -o-transition: all 0.75s ease 0s;
   transition: all 0.75s ease 0s; }
 
-article.animated-button:hover {
+.animated-button:hover {
   color: #000;
   text-shadow: none; }
 
-article.animated-button:hover:after {
+.animated-button:hover:after {
   height: 100vw; }
 
-article.animated-button {
+.animated-button {
   position: relative;
   display: block;
   padding: 14px 15px;
@@ -59,16 +59,31 @@ article.animated-button {
   -o-transition: all 1s ease;
   transition: all 1s ease; }
 
-article.animated-button.victoria-two {
+.animated-button.victoria-two {
   border-top: 2px solid #fec845;
   border-bottom: 2px solid #fec845; }
 
-article.animated-button.victoria-two:after {
+.animated-button.victoria-two:after {
   background: #fec845;
   -moz-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   -ms-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   -webkit-transform: translateX(-50%) translateY(-50%) rotate(25deg);
   transform: translateX(-50%) translateY(-50%) rotate(25deg); }
+
+.animated-button.victoria-four {
+  border: 2px solid #D24D57; }
+
+.animated-button.victoria-four:after {
+  background: #D24D57;
+  opacity: .5;
+  -moz-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  -ms-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  -webkit-transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  transform: translateY(-50%) translateX(-50%) rotate(90deg); }
+
+.animated-button.victoria-four:hover:after {
+  opacity: 1;
+  height: 600% !important; }
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -252,21 +267,6 @@ main {
     text-align: center;
     color: #fff; }
 
-.government-status {
-  width: 100%;
-  padding: 0 1em; }
-  .government-status h2 {
-    text-align: center; }
-  .government-status .service {
-    display: flex;
-    width: 100%;
-    padding: 0 .5em; }
-    .government-status .service .icon {
-      width: 6em;
-      padding: 1em; }
-    .government-status .service .description {
-      flex: 1; }
-
 .voting-info {
   background-color: #fec845;
   padding: 1em; }
@@ -293,17 +293,39 @@ main {
 .results-grouping {
   width: 100%; }
 
-.accordion-btn {
+.accordion-btn, .topic-btn {
   width: 100%;
   font-family: 'BEBAS', sans-serif;
   cursor: pointer; }
 
+.topic-btn {
+  color: #fff; }
+
+.topic-btn:hover {
+  color: #fff;
+  background-color: #fec845; }
+
 .accordion-content {
-  height: 0; }
+  height: 0;
+  transition: all .2 ease-in-out; }
   .accordion-content div {
     display: none; }
   .accordion-content #map {
     display: none; }
+
+.topic-accordion {
+  height: 0;
+  transition: all .2 ease-in-out; }
+  .topic-accordion .question {
+    display: none; }
+
+.topic-accordion.active {
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  transition: all .2 ease-in-out; }
+  .topic-accordion.active .question {
+    display: block; }
 
 .accordion-content.active {
   display: flex;
@@ -311,10 +333,15 @@ main {
   background-color: #444;
   color: #fff;
   padding: .25em 1em 1em 1em;
-  height: auto; }
+  height: auto;
+  transition: all .2 ease-in-out; }
+  .accordion-content.active .video-container {
+    margin-bottom: 1em; }
   .accordion-content.active div {
     display: block;
     width: 100%; }
+  .accordion-content.active div:not(:last-child) {
+    border-bottom: 1px solid #fff; }
   .accordion-content.active #map {
     display: block;
     width: 80vw;

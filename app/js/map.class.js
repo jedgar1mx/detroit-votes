@@ -44,7 +44,7 @@ export default class Map {
       // var features = parent.queryRenderedFeatures(e.point, {
       //   layers: ["council-fill"]
       // });
-      parent.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+      // parent.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
     });
     Map.getMap().on('click', function (e) {
       console.log(e);
@@ -141,12 +141,30 @@ export default class Map {
 
       Connector.getData('https://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C+'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson' , function( district ) {
          console.log(JSON.parse(district));
-         document.querySelectorAll('.district-num').forEach(function(item){
-           item.innerHTML = JSON.parse(district).features[0].attributes.districts;
-           console.log(Map.getData());
+         let mayorHTML = '<article class="accordion-btn animated-button victoria-two">Candidates for City Mayor</article><article class="accordion-content">';
+         let clerkHTML = '';
+         let atLargeHTML = '';
+         let councilHTML = '';
+         let policeHTML = '';
+         let data = Map.getData();
+         console.log(data);
+         data.candidates.forEach(function(candidate){
+           switch (candidate.race) {
+             case 'Mayor':
+               mayorHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
+
+               data.questions.mayor.forEach(function(question, index) {
+                 mayorHTML += '<article class="topic-btn animated-button victoria-two" data-id="'+ index +'">'+ question.topic +'</article><article class="topic-accordion" data-id="'+ index +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[index] +'</p></article></article>';
+               });
+               break;
+             default:
+
+           }
+           mayorHTML += '</div>';
+           document.getElementById('mayor').innerHTML = mayorHTML;
          });
-         document.querySelector('.search-results').className = 'search-results active';
-      });
+       });
+       document.querySelector('.search-results').className = 'search-results active';
     });
   }
 }

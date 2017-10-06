@@ -65,6 +65,7 @@ export default class Map {
         }
       });
     }
+    this.toggleActive = false;
   }
   changeBaseMap(baseMap){
     Map.getMap().setStyle(`${this.styleURL}/${this.baseLayers[baseMap]}`);
@@ -131,8 +132,42 @@ export default class Map {
   static getGeocoderStatus(){
     return this.geocoderActive;
   }
+  static setToggleStatus(s){
+    this.toggleActive = s;
+  }
+  static getToggleStatus(){
+    return this.toggleActive;
+  }
+  static toggleDisplay(e){
+    Map.setToggleStatus(true);
+    console.log(e.target);
+    let tempContainer = document.querySelector('.accordion-content[data-id="' + e.target.getAttribute('data-id') + '"]');
+    console.log(tempContainer);
+    (tempContainer === null) ? tempContainer = document.querySelector('.accordion-content-1[data-id="' + e.target.getAttribute('data-id') + '"]') : 0;
+    console.log(tempContainer.className);
+    switch (true) {
+      case tempContainer.className === 'accordion-content-1 active':
+        tempContainer.className = 'accordion-content-1';
+        break;
+      case tempContainer.className === 'accordion-content-1':
+        tempContainer.className = 'accordion-content-1 active';
+        break;
+      case tempContainer.className === 'accordion-content active':
+        tempContainer.className = 'accordion-content';
+        break;
+      case tempContainer.className === 'accordion-content':
+        tempContainer.className = 'accordion-content active';
+        break;
+      case tempContainer.className === 'accordion-content topic active':
+        tempContainer.className = 'accordion-content topic';
+        break;
+      default:
+        tempContainer.className = 'accordion-content topic active';
+    }
+  }
   static loadGeocoderResults(ev){
     console.log(ev);
+    document.querySelector('.loading').className = 'loading active';
     Map.getMap().getSource('single-point').setData(ev.result.geometry);
     Connector.getData('https://gis.detroitmi.gov/arcgis/rest/services/DoIT/2016_Voting_Precincts/MapServer/0/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=json',function( pollPlace ) {
       console.log(JSON.parse(pollPlace));
@@ -141,29 +176,77 @@ export default class Map {
 
       Connector.getData('https://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C+'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson' , function( district ) {
          console.log(JSON.parse(district));
-         let mayorHTML = '<article class="accordion-btn animated-button victoria-two">Candidates for City Mayor</article><article class="accordion-content">';
-         let clerkHTML = '';
-         let atLargeHTML = '';
-         let councilHTML = '';
-         let policeHTML = '';
+         let mayorHTML = '<article class="accordion-btn animated-button victoria-two" data-id="mayor">Candidates for City Mayor</article><article class="accordion-content" data-id="mayor">';
+         let clerkHTML = '<article class="accordion-btn animated-button victoria-two" data-id="clerk">Candidates for City Clerk</article><article class="accordion-content" data-id="clerk">';
+         let atLargeHTML = '<article class="accordion-btn animated-button victoria-two" data-id="at-large">Candidates for City Council at Large</article><article class="accordion-content" data-id="at-large">';
+         let councilHTML = '<article class="accordion-btn animated-button victoria-two" data-id="council">Candidates for City Council District '+ JSON.parse(district).features[0].attributes.districts +'</article><article class="accordion-content" data-id="council">';
+         let policeHTML = '<article class="accordion-btn animated-button victoria-two" data-id="police">Candidates for City Police Commissioner District '+ JSON.parse(district).features[0].attributes.districts +'</article><article class="accordion-content" data-id="police">';
          let data = Map.getData();
          console.log(data);
-         data.candidates.forEach(function(candidate){
+         data.candidates.forEach(function(candidate, candidateIndex){
            switch (candidate.race) {
              case 'Mayor':
                mayorHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
 
-               data.questions.mayor.forEach(function(question, index) {
-                 mayorHTML += '<article class="topic-btn animated-button victoria-two" data-id="'+ index +'">'+ question.topic +'</article><article class="topic-accordion" data-id="'+ index +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[index] +'</p></article></article>';
+               data.questions.mayor.forEach(function(question, questionIndex) {
+                 mayorHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
                });
+
+               mayorHTML += '</div>';
+               break;
+             case 'City Clerk':
+               clerkHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
+
+               data.questions.cityClerk.forEach(function(question, questionIndex) {
+                 clerkHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+               });
+
+               clerkHTML += '</div>';
+               break;
+             case 'City Council - At Large':
+               atLargeHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
+
+               data.questions.cityCouncil.forEach(function(question, questionIndex) {
+                 atLargeHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+               });
+
+               atLargeHTML += '</div>';
+               break;
+             case 'City Council - District ' + JSON.parse(district).features[0].attributes.districts:
+               councilHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
+
+               data.questions.cityCouncil.forEach(function(question, questionIndex) {
+                 councilHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+               });
+
+               councilHTML += '</div>';
+               break;
+             case 'Police Commissioner - District ' + JSON.parse(district).features[0].attributes.districts:
+               policeHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
+
+               data.questions.policeCommissioner.forEach(function(question, questionIndex) {
+                 policeHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+               });
+
+               policeHTML += '</div>';
                break;
              default:
 
            }
-           mayorHTML += '</div>';
            document.getElementById('mayor').innerHTML = mayorHTML;
+           document.getElementById('city-clerk').innerHTML = clerkHTML;
+           document.getElementById('at-large').innerHTML = atLargeHTML;
+           document.getElementById('council-district').innerHTML = councilHTML;
+           document.getElementById('police').innerHTML = policeHTML;
+           let sectionBtns = document.querySelectorAll('.accordion-btn');
+           sectionBtns.forEach(function(btn) {
+             btn.addEventListener('click', function(e){
+               Map.toggleDisplay(e);
+             });
+           });
          });
        });
+       document.querySelector('.loading').className = 'loading';
        document.querySelector('.search-results').className = 'search-results active';
     });
   }

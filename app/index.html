@@ -7,7 +7,7 @@
   <meta name="author" content="Edgar Montes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <!--build:css css/styles.min.css-->
-  <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="img/logo.png"/>
   <link href="https://api.mapbox.com/mapbox-gl-js/v0.39.1/mapbox-gl.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.0.1/mapbox-gl-geocoder.css" type="text/css" />
   <link href="css/styles.css" rel="stylesheet" />
@@ -22,14 +22,18 @@
     MENU
   </label>
   <nav class="nav">
+    <div id="logo">
+      <img src="img/logo.png" alt="Citizen Detroit">
+    </div>
   	<ul>
   		<li><a href="#">Home</a></li>
+      <li><a href="#">Resources</a></li>
   		<li><a href="#">About</a></li>
   		<li><a href="#">Contact</a></li>
   	</ul>
   </nav>
   <header>
-    <h1>INFORM DETROIT</h1>
+    <h1>INFORM <span><img src="img/logo.png" alt="Citizens Detroit"></span> DETROIT</h1>
   </header>
   <main>
     <section class="intro">
@@ -40,52 +44,49 @@
       <h3>Find your voting information.</h3>
       <article id="geocoder"></article>
     </section>
+    <section class="loading">
+      <div class="loader" id="loader-6">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </section>
     <section class="search-results">
       <p>Here is the voting information for this address.</p>
       <section class="flex-grid">
-        <section class="results-grouping">
-          <article class="accordion-btn animated-button victoria-two">voting poll</article>
-          <article class="accordion-content">
+        <section id="poll" class="results-grouping">
+          <article class="accordion-btn-1 animated-button victoria-two" data-id="poll">voting poll</article>
+          <article class="accordion-content-1" data-id="poll">
             <div class="">
-              <p>Name: <span id="poll-name"></span></p>
-              <p>Address: <span id="poll-addr"></span></p>
-              <p>Hours: 8am - 8pm</p>
+              <article class="poll-data">
+                <p>Name: <span id="poll-name"></span></p>
+                <p>Address: <span id="poll-addr"></span></p>
+                <p>Hours: 8am - 8pm</p>
+              </article>
               <div id="map"></div>
             </div>
           </article>
         </section>
-        <section id="mayor" class="results-grouping"></section>
-        <section id="city-clerk" class="results-grouping">
-          <article class="accordion-btn animated-button victoria-two">Candidates for City Clerk</article>
-          <article class="accordion-content">
-            <div class="">
-              <p>Candidates for City Clerk</p>
-            </div>
-          </article>
+        <section id="mayor" class="results-grouping candidates">
+          <article class="accordion-btn animated-button victoria-two" data-id="mayor">Candidates for City Mayor</article>
+          <article class="accordion-content" data-id="mayor"></article>
         </section>
-        <section id="at-large" class="results-grouping">
-          <article class="accordion-btn animated-button victoria-two">Candidates for Council at Large</article>
-          <article class="accordion-content">
-            <div class="">
-              <p>Candidates for Council at Large</p>
-            </div>
-          </article>
+        <section id="city-clerk" class="results-grouping candidates">
+          <article class="accordion-btn animated-button victoria-two" data-id="clerk">Candidates for City Clerk</article>
+          <article class="accordion-content" data-id="clerk"></article>
         </section>
-        <section id="council-district" class="results-grouping">
-          <article class="accordion-btn animated-button victoria-two">Candidates for Council District <span class="district-num"></span></article>
-          <article class="accordion-content">
-            <div class="">
-              <p>Candidates for Council District</p>
-            </div>
-          </article>
+        <section id="at-large" class="results-grouping candidates">
+          <article class="accordion-btn animated-button victoria-two" data-id="at-large">Candidates for Council at Large</article>
+          <article class="accordion-content" data-id="at-large"></article>
         </section>
-        <section id="police" class="results-grouping">
-          <article class="accordion-btn animated-button victoria-two">Candidates for Police Commissioner District <span class="district-num"></span></article>
-          <article class="accordion-content">
-            <div class="">
-              <p>Candidates for Police Commissioner District</p>
-            </div>
-          </article>
+        <section id="council-district" class="results-grouping candidates">
+          <article class="accordion-btn animated-button victoria-two" data-id="council">Candidates for Council District <span class="district-num"></span></article>
+          <article class="accordion-content" data-id="council"></article>
+        </section>
+        <section id="police" class="results-grouping candidates">
+          <article class="accordion-btn animated-button victoria-two" data-id="police">Candidates for Police Commissioner District <span class="district-num"></span></article>
+          <article class="accordion-content" data-id="police"></article>
         </section>
       </section>
     </section>

@@ -122,6 +122,14 @@ img{width: 100%;}
 	transition: left $base-duration ease;
 	z-index: 5;
 
+	#logo{
+		width: 5em;
+		height: 5em;
+		position: absolute;
+		top: 1em;
+		right: 2em;
+	}
+
 	ul {
 		position: relative;
 		list-style-type: none;
@@ -185,6 +193,10 @@ header{
 		margin: auto;
 		text-align: center;
 	}
+
+	span{
+		display: none;
+	}
 }
 .search{
 	width: 3em;
@@ -220,6 +232,14 @@ main {
 			text-align: center;
 		}
 	}
+
+	.loading{
+		display: none;
+	}
+
+	.loading.active{
+		display: flex;
+	}
 }
 .top-hero-container{
 	background:{
@@ -251,6 +271,7 @@ main {
 		.mapboxgl-ctrl-geocoder{
 			width: 100%;
 			border-radius: 0;
+			max-width: none;
 		}
 	}
 }
@@ -271,35 +292,30 @@ main {
 .results-grouping{
 	width: 100%;
 }
-.accordion-btn, .topic-btn{
+.accordion-btn, .accordion-btn-1{
 	width: 100%;
 	font-family: 'BEBAS', sans-serif;
 	cursor: pointer;
 }
-.topic-btn{
+.accordion-btn.topic{
 	color: $color-4;
 }
-.topic-btn:hover{
+.accordion-btn.topic:hover{
 	color: $color-4;
 	background-color: $color-1;
 }
-.accordion-content{
+.accordion-content, .accordion-content-1{
 	height: 0;
 	transition: all .2 ease-in-out;
 	div{
 		display: none;
 	}
 	#map{display: none;}
-}
-.topic-accordion{
-	height: 0;
-	transition: all .2 ease-in-out;
-
 	.question{
 		display: none;
 	}
 }
-.topic-accordion.active{
+.accordion-content.topic.active{
 	display: flex;
 	flex-wrap: wrap;
 	height: auto;
@@ -309,7 +325,7 @@ main {
 		display: block;
 	}
 }
-.accordion-content.active{
+.accordion-content.active, .accordion-content-1.active{
 	display: flex;
 	flex-wrap: wrap;
 	background-color: $color-2;
@@ -322,12 +338,17 @@ main {
 		margin-bottom: 1em;
 	}
 
+	h3{
+		text-align: center;
+	}
+
 	div{
 		display: block;
 		width: 100%;
 	}
 	div:not(:last-child){
-		border-bottom: 1px solid $color-4;
+		padding-bottom: 1em;
+		border-bottom: 1em solid $color-4;
 	}
 	#map{
 		display: block;
@@ -340,6 +361,58 @@ main {
 		padding: 0;
 	}
 }
+@media (min-width: 500px) {
+	header{
+		h1{
+			padding-left: 0;
+		}
+		span{
+			position: relative;
+			top: .25em;
+		}
+		img{
+			height: 1.5em;
+			width: 1.5em;
+		}
+	}
+	main{
+		.intro{
+			max-width: 800px;
+			margin: auto;
+		}
+	}
+	#geocoder{
+		max-width: 30em;
+		margin: auto;
+	}
+	.search-results > p{
+		text-align: center;
+	}
+	#poll div{
+		padding: 1em 0;
+		margin: auto;
+		width: auto;
+
+		.poll-data{
+			float: left;
+		}
+		#map{
+			width: 20em;
+			height: 20em;
+		}
+	}
+	.results-grouping.candidates{
+		div{
+			width: 50%;
+			padding: 2em 1em !important;
+			border: none;
+			padding: 0;
+		}
+		div:not(:last-child){
+			border-bottom: none;
+		}
+	}
+}
 // ===================== main end =========================
 footer{
 	height: 5em;
@@ -347,6 +420,7 @@ footer{
 	background-color: $color-2;
 	color: $color-4;
 	text-align: center;
+	margin-top: 1em;
 
 	div{
 		margin: auto;

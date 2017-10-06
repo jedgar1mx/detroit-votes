@@ -4,11 +4,11 @@ import Map from './map.class.js';
 import Connector from './connector.class.js'
 (function(){
   let map = new Map({
-    styleURL: 'mapbox://styles/jedgar1mx',
+    styleURL: 'mapbox://styles/mapbox',
     mapContainer: 'map',
     geocoder: true,
     baseLayers: {
-      street: 'cj774gftq3bwr2so2y6nqzvz4',
+      street: 'streets-v10',
       satellite: 'cj774gftq3bwr2so2y6nqzvz4'
     },
     interactive: true,
@@ -76,31 +76,10 @@ import Connector from './connector.class.js'
     Map.setData(JSON.parse(response));
   });
 
-  let toggleDisplay = function toggleDisplay(e){
-    console.log(e);
-    console.log(e.target.parentElement.childNodes);
-    console.log(e.target.parentElement.childNodes[3].className);
-    if(e.target.className === 'accordion-btn animated-button victoria-two'){
-      (e.target.parentElement.childNodes[3].className === 'accordion-content active') ? e.target.parentElement.childNodes[3].className = 'accordion-content' : e.target.parentElement.childNodes[3].className = 'accordion-content active';
-    }else{
-      console.log("topic section");
-      console.log(e.target);
-      let tempContainer = document.querySelector('.topic-accordion[data-id="' + e.target.getAttribute('data-id') + '"]');
-      console.log(tempContainer);
-      (tempContainer.className === 'topic-accordion active') ? tempContainer.className = 'topic-accordion' : tempContainer.className = 'topic-accordion active';
-    }
-  };
-  let sectionBtns = document.querySelectorAll('.accordion-btn');
-  sectionBtns.forEach(function(btn) {
-    btn.addEventListener('click', function(e){
-      toggleDisplay(e);
-    });
-  });
-  let topicBtns = document.querySelectorAll('.topic-btn');
-  topicBtns.forEach(function(btn) {
-    btn.addEventListener('click', function(e){
-      toggleDisplay(e);
-    });
-  });
   console.log(map);
+  let pollBtn = document.querySelector('.accordion-btn-1');
+  console.log(pollBtn);
+  pollBtn.addEventListener('click', function(e){
+    Map.toggleDisplay(e);
+  });
 })(window);

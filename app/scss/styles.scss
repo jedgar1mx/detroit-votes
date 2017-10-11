@@ -360,6 +360,11 @@ main {
 	p{
 		padding: 0;
 	}
+	p:first-child{
+		font-weight: bold;
+		font-size: 1.2em;
+		color: $color-1;
+	}
 }
 @media (min-width: 500px) {
 	header{

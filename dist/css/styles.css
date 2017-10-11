@@ -403,6 +403,10 @@ main {
     margin: auto; }
   .accordion-content.active p, .accordion-content-1.active p {
     padding: 0; }
+  .accordion-content.active p:first-child, .accordion-content-1.active p:first-child {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #fec845; }
 
 @media (min-width: 500px) {
   header h1 {

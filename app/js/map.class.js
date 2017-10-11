@@ -189,7 +189,7 @@ export default class Map {
                mayorHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
 
                data.questions.mayor.forEach(function(question, questionIndex) {
-                 mayorHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+                 mayorHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><p>'+ question.q +'</p><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
                });
 
                mayorHTML += '</div>';
@@ -198,7 +198,7 @@ export default class Map {
                clerkHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
 
                data.questions.cityClerk.forEach(function(question, questionIndex) {
-                 clerkHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+                 clerkHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><p>'+ question.q +'</p>'+ candidate.answers[questionIndex] +'</article></article>';
                });
 
                clerkHTML += '</div>';
@@ -207,7 +207,7 @@ export default class Map {
                atLargeHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
 
                data.questions.cityCouncil.forEach(function(question, questionIndex) {
-                 atLargeHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+                 atLargeHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><p>'+ question.q +'</p><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
                });
 
                atLargeHTML += '</div>';
@@ -216,7 +216,7 @@ export default class Map {
                councilHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
 
                data.questions.cityCouncil.forEach(function(question, questionIndex) {
-                 councilHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+                 councilHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><p>'+ question.q +'</p><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
                });
 
                councilHTML += '</div>';
@@ -225,7 +225,7 @@ export default class Map {
                policeHTML += '<div><h3>'+ candidate.name +'</h3><article class="video-container"><iframe width="100%" height="315" src="'+ candidate.videoURL +'" frameborder="0" allowfullscreen></iframe></article>';
 
                data.questions.policeCommissioner.forEach(function(question, questionIndex) {
-                 policeHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><h4>'+ question.q +'</h4><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
+                 policeHTML += '<article class="accordion-btn topic animated-button victoria-two" data-id="'+ candidateIndex +'-'+ questionIndex +'">'+ question.topic +'</article><article class="accordion-content topic" data-id="'+ candidateIndex +'-'+ questionIndex +'"><article class="question"><p>'+ question.q +'</p><p>'+ candidate.answers[questionIndex] +'</p></article></article>';
                });
 
                policeHTML += '</div>';

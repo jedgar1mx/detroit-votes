@@ -1,4 +1,4 @@
-@import url('../fonts/BEBAS.ttf');
+@import url('../fonts/Avenir-Next-Condensed.ttc');
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 @import "buttons";
 $base-duration: 500ms;
@@ -8,6 +8,20 @@ $color-1: #fec845;
 $color-2: #444;
 $color-3: #2ecc71;
 $color-4: #fff;
+$color-5: #FF7079;
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: $color-2;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: $color-2;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: $color-2;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: $color-2;
+}
 
 // Breakpoints
 $sm: new-breakpoint(min-width 320px);
@@ -21,7 +35,7 @@ $lg: new-breakpoint(min-width 1024px);
 body { margin:0; padding:0; font-family: 'Montserrat', sans-serif;}
 header{width: 100%; display: flex;}
 main {position: relative; width: 100%;}
-h1,h2,h3,h4,h5{font-family: 'BEBAS', sans-serif; font-weight: bold}
+h1,h2,h3,h4,h5{font-family: 'Avenir Next Condensed', sans-serif; font-weight: bold}
 img{width: 100%;}
 // ====================== menu ============================
 .menu {
@@ -239,6 +253,71 @@ main {
 
 	.loading.active{
 		display: flex;
+	}
+
+	form{
+		.g-recaptcha{
+			display: flex;
+			margin-bottom: 1em;
+
+			div{
+				margin: auto;
+			}
+		}
+		
+		label{
+			display: block;
+			font-weight: bold;
+			padding: .2em;
+
+			input, textarea{
+				font-size: 1.1em;
+				font-family: 'Montserrat', sans-serif;
+				width: 100%;
+				padding: 1em;
+				border: none;
+				background-color: $color-1;
+				color: $color-2;
+				margin-bottom: 1em;
+				transition: all .2s ease-in-out;
+			}
+
+			input.error, textarea.error{
+				transition: all .2s ease-in-out;
+				background-color: $color-5;
+			}
+		}
+
+		button{
+			font-size: 1.5em;
+			font-family: 'Avenir Next Condensed', sans-serif;
+			font-weight: bold;
+			border: .1em solid $color-1;
+			background-color: $color-4;
+			color: $color-2;
+			width: 100%;
+			padding: .5em;
+			cursor: pointer;
+			transition: all .2s ease-in-out;
+		}
+
+		button:hover{
+			background-color: $color-1;
+			transition: all .2s ease-in-out;
+		}
+	}
+
+	#submit-results{
+		text-align: center;
+		font-size: 1.25em;
+		padding: .5em
+	}
+
+	#submit-results.good{
+		background-color: $color-3;
+	}
+	#submit-results.bad{
+		background-color: $color-5;
 	}
 }
 .top-hero-container{

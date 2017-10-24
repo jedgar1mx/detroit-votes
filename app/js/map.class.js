@@ -47,7 +47,7 @@ export default class Map {
       // parent.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
     });
     Map.getMap().on('click', function (e) {
-      console.log(e);
+      // console.log(e);
     });
     this.geocoderActive = false;
     if(init.geocoder){
@@ -58,7 +58,7 @@ export default class Map {
       });
       this.geocoder.on('result', function(e) {
         if(Map.getGeocoderStatus()){
-          console.log("Geocoder already searching");
+          // console.log("Geocoder already searching");
         }else{
           Map.setGeocoderStatus(true);
           Map.loadGeocoderResults(e);
@@ -140,11 +140,11 @@ export default class Map {
   }
   static toggleDisplay(e){
     Map.setToggleStatus(true);
-    console.log(e.target);
+    // console.log(e.target);
     let tempContainer = document.querySelector('.accordion-content[data-id="' + e.target.getAttribute('data-id') + '"]');
-    console.log(tempContainer);
+    // console.log(tempContainer);
     (tempContainer === null) ? tempContainer = document.querySelector('.accordion-content-1[data-id="' + e.target.getAttribute('data-id') + '"]') : 0;
-    console.log(tempContainer.className);
+    // console.log(tempContainer.className);
     switch (true) {
       case tempContainer.className === 'accordion-content-1 active':
         tempContainer.className = 'accordion-content-1';
@@ -166,23 +166,23 @@ export default class Map {
     }
   }
   static loadGeocoderResults(ev){
-    console.log(ev);
+    // console.log(ev);
     document.querySelector('.loading').className = 'loading active';
     Map.getMap().getSource('single-point').setData(ev.result.geometry);
     Connector.getData('https://gis.detroitmi.gov/arcgis/rest/services/DoIT/2016_Voting_Precincts/MapServer/0/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=json',function( pollPlace ) {
-      console.log(JSON.parse(pollPlace));
+      // console.log(JSON.parse(pollPlace));
       document.getElementById('poll-name').innerHTML = JSON.parse(pollPlace).features[0].attributes.polling_lo;
       document.getElementById('poll-addr').innerHTML = JSON.parse(pollPlace).features[0].attributes.polling_ad;
 
       Connector.getData('https://gis.detroitmi.gov/arcgis/rest/services/NeighborhoodsApp/council_district/MapServer/1/query?where=&text=&objectIds=&time=&geometry='+ev.result.geometry.coordinates[0]+'%2C+'+ev.result.geometry.coordinates[1]+'&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson' , function( district ) {
-         console.log(JSON.parse(district));
+        //  console.log(JSON.parse(district));
          let mayorHTML = '<article class="accordion-btn animated-button victoria-two" data-id="mayor">Candidates for City Mayor</article><article class="accordion-content" data-id="mayor">';
          let clerkHTML = '<article class="accordion-btn animated-button victoria-two" data-id="clerk">Candidates for City Clerk</article><article class="accordion-content" data-id="clerk">';
          let atLargeHTML = '<article class="accordion-btn animated-button victoria-two" data-id="at-large">Candidates for City Council at Large</article><article class="accordion-content" data-id="at-large">';
          let councilHTML = '<article class="accordion-btn animated-button victoria-two" data-id="council">Candidates for City Council District '+ JSON.parse(district).features[0].attributes.districts +'</article><article class="accordion-content" data-id="council">';
          let policeHTML = '<article class="accordion-btn animated-button victoria-two" data-id="police">Candidates for City Police Commissioner District '+ JSON.parse(district).features[0].attributes.districts +'</article><article class="accordion-content" data-id="police">';
          let data = Map.getData();
-         console.log(data);
+        //  console.log(data);
          data.candidates.forEach(function(candidate, candidateIndex){
            switch (candidate.race) {
              case 'Mayor':

@@ -72,13 +72,13 @@ import Connector from './connector.class.js'
   });
 
   Connector.getData('js/data.json', function(response){
-    console.log(JSON.parse(response));
+    // console.log(JSON.parse(response));
     Map.setData(JSON.parse(response));
   });
 
-  console.log(map);
+  // console.log(map);
   let pollBtn = document.querySelector('.accordion-btn-1');
-  console.log(pollBtn);
+  // console.log(pollBtn);
   pollBtn.addEventListener('click', function(e){
     Map.toggleDisplay(e);
   });

@@ -37,7 +37,30 @@
   <main>
     <section class="intro">
       <h2>CONTACT US</h2>
-      <!-- <p>For democracy to flourish, informed and mobilized citizens must be at the forefront of public policy debate, discussion, and decision-making. CitizenDetroit is a community engagement initiative established to educate, engage and mobilize residents to fully participate in the restructuring of city services, restoration of confidence in city government, and renaissance of the city's neighborhoods and businesses.</p> -->
+      <form class="" action="" method="post">
+        <label for="name">
+          Name:
+          <input id="name" type="text" name="" placeholder="Enter your name." value="">
+        </label>
+        <label for="email">
+          Email:
+          <input id="email" type="email" name="" placeholder="Enter your email." value="">
+        </label>
+        <label for="message">
+          Message:
+          <textarea id="message" type="text" name="" placeholder="Enter your message." value=""></textarea>
+        </label>
+        <button id="submit-btn" type="button" name="button">SUBMIT</button>
+      </form>
+      <section class="loading">
+        <div class="loader" id="loader-6">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </section>
+      <h4 id="submit-results" class=""></h4>
     </section>
   </main>
   <footer>
@@ -45,5 +68,10 @@
       Inform Detroit &copy; 2017
     </div>
   </footer>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="js/send.form.js"></script>
 </body>
 </html>
